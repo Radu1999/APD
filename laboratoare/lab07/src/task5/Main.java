@@ -1,5 +1,7 @@
 package task5;
 
+import java.util.concurrent.ForkJoinPool;
+
 public class Main {
     static int N = 10;
     static int COLORS = 3;
@@ -23,7 +25,13 @@ public class Main {
         }
     }
 
-    private static boolean verifyColors(int[] colors, int step) {
+    static void colorGraphParallel(int[] colors, int step) {
+        ForkJoinPool fp = new ForkJoinPool(4);
+        fp.invoke(new MyTask(colors, step));
+        fp.shutdown();
+    }
+
+    static boolean verifyColors(int[] colors, int step) {
         for (int i = 0; i < step; i++) {
             if (colors[i] == colors[step] && isEdge(i, step))
                 return false;
@@ -50,5 +58,7 @@ public class Main {
     public static void main(String[] args) {
         int[] colors = new int[N];
         colorGraph(colors, 0);
+        System.out.println("PARALLEL");
+        colorGraphParallel(colors, 0);
     }
 }

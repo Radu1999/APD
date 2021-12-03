@@ -1,13 +1,16 @@
 package multipleProducersMultipleConsumers;
-
+/**
+ * @author cristian.chilipirea
+ *
+ */
 public class Buffer {
-    private int a;
+	int a;
 
-    public void put(int value) {
-        a = value;
-    }
+	void put(int value) {
+		a = value;
+	}
 
-    public int get() {
-        return a;
-    }
+	int get() {
+		return a;
+	}
 }

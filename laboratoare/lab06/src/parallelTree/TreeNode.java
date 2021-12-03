@@ -9,7 +9,7 @@ public class TreeNode {
 		this.name = name;
 	}
 
-	public void addChild(TreeNode child) {
+	public synchronized void addChild(TreeNode child) {
 		if (left == null) {
 			left = child;
 			return;

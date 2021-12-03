@@ -9,10 +9,12 @@ import java.util.concurrent.CyclicBarrier;
 public class ReadTreePart implements Runnable {
 	TreeNode tree;
 	String fileName;
+	CyclicBarrier bar;
 
-	public ReadTreePart(TreeNode tree, String fileName) {
+	public ReadTreePart(TreeNode tree, String fileName, CyclicBarrier barrier) {
 		this.tree = tree;
 		this.fileName = fileName;
+		bar = barrier;
 	}
 
 	@Override
@@ -33,6 +35,13 @@ public class ReadTreePart implements Runnable {
 				treeNode.addChild(new TreeNode(child));
 			}
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			bar.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
 			e.printStackTrace();
 		}
 	}

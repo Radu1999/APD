@@ -3,9 +3,12 @@ package multipleProducersMultipleConsumersNBuffer;
 import java.util.LinkedList;
 
 /**
- * DO NOT MODIFY
+ * @author Gabriel Gutu <gabriel.gutu at upb.ro>
+ * 
+ *         DO NOT MODIFY
  */
-public class LimitedQueue<T> extends LinkedList<T> {
+public class LimitedQueue extends LinkedList {
+
     private final int limit;
 
     public LimitedQueue(int limit) {
@@ -13,10 +16,10 @@ public class LimitedQueue<T> extends LinkedList<T> {
     }
 
     @Override
-    public boolean add(T o) {
+    public boolean add(Object o) {
         boolean added = super.add(o);
         while (added && size() > limit) {
-            super.remove();
+           super.remove();
         }
         return added;
     }

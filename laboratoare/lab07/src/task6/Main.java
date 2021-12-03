@@ -1,9 +1,11 @@
 package task6;
 
+import java.util.concurrent.ForkJoinPool;
+
 public class Main {
     public static int N = 4;
 
-    private static boolean check(int[] arr, int step) {
+    static boolean check(int[] arr, int step) {
         for (int i = 0; i <= step; i++) {
             for (int j = i + 1; j <= step; j++) {
                 if (arr[i] == arr[j] || arr[i] + i == arr[j] + j || arr[i] + j == arr[j] + i)
@@ -13,7 +15,7 @@ public class Main {
         return true;
     }
 
-    private static void printQueens(int[] sol) {
+    static void printQueens(int[] sol) {
         StringBuilder aux = new StringBuilder();
         for (int i = 0; i < sol.length; i++) {
             aux.append("(").append(sol[i] + 1).append(", ").append(i + 1).append("), ");
@@ -36,8 +38,16 @@ public class Main {
             }
         }
     }
+
+    static void queensParallel(int [] graph, int step) {
+        ForkJoinPool fp = new ForkJoinPool(4);
+        fp.invoke(new MyTask(graph, step));
+        fp.shutdown();
+    }
     public static void main(String[] args) {
         int[] graph = new int[N];
         queens(graph, 0);
+        System.out.println("PARALLEL");
+        queensParallel(graph, 0);
     }
 }

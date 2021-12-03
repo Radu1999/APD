@@ -9,11 +9,13 @@ import java.util.concurrent.Semaphore;
 public class Reader extends Thread {
     private final String filename;
     private final List<Integer> list;
+    private Semaphore sem;
 
-    public Reader(String filename, List<Integer> list) {
+    public Reader(String filename, List<Integer> list, Semaphore semaphore) {
         super();
         this.filename = filename;
         this.list = list;
+        sem = semaphore;
     }
 
     @Override
@@ -26,5 +28,6 @@ public class Reader extends Thread {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        sem.release();
     }
 }
